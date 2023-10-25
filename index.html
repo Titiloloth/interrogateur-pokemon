@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets/css/style.css"></link>
+    <script type="module" src="./assets/js/script.js" async></script>
+    
+    <title>Interroger ressource externe</title>
+</head>
+<body>
+    <div class="conteneur">
+        <div class="conteneur-central">
+            <h1>Types de pokemon</h1>
+            <label for="select">Selectionnez votre Pokemon</label>
+            <select>
+                
+            </select>
+            <button>Chercher via JS</button>
+        </div>
+        <img src="/assets/img/pokemon-background.jpg" alt="">
+    </div>
+<!-- pop-up -->
+    <div class="modal" id="modal">
+        <div class="modal-inner">
+            <div id="nompokemon"></div>
+            <div><img src="" alt="" id="imagepokemon"></div>
+            <div id="typespokemon"></div>
+            <button id="retour" onClick="window.location.reload()">retour</button>
+        </div>
+    </div>
+</body>
+</html>

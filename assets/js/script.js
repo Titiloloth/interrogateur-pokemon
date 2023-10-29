@@ -3,24 +3,37 @@
 document.getElementById("modal").style.display = 'none'
 let radioName = document.getElementById("radioName")
 let radioElement = document.getElementById("radioElement")
-
-
+const URL_API = "https://pokebuildapi.fr/api/v1/"
 // Mes API
 
 let datasFetch;
-const urlApi = "https://pokebuildapi.fr/api/v1/pokemon/limit/25";
+let urlApiPokemon = URL_API + "pokemon/limit/25";
 await getDataFetch();
 async function getDataFetch () {
-    const res = await fetch(urlApi);
+    let res = await fetch(urlApiPokemon);
     datasFetch = await res.json();
 }
 
 let datasFetchTypes;
-const urlApiTypes = "https://pokebuildapi.fr/api/v1/types";
+let urlApiTypes = URL_API + "types";
 await getDataFetchTypes();
 async function getDataFetchTypes () {
-    const resTypes = await fetch(urlApiTypes);
+    let resTypes = await fetch(urlApiTypes);
     datasFetchTypes = await resTypes.json();
+}
+
+let urlPokemonParType = URL_API + "pokemon/type/"
+async function getDataFetchPokemonParType (type) {
+    let res = await fetch(urlPokemonParType + type);
+    res.json()
+        .then(element =>{
+            element = element.slice(0,3);
+            document.getElementById("modal").style.display = 'flex';
+            let imagePokemon2 = document.getElementById("imagepokemon");
+            imagePokemon2.style.display = 'none'
+            let nomPokemon = document.getElementById("nompokemon");
+            nomPokemon.innerHTML = element[0].name + "\n" + element[1].name + "\n" + element[2].name
+        });
 }
 
 // NOMS
@@ -82,13 +95,16 @@ radioElement.addEventListener("click", function(){
         AfficherPokemonParElement(choix);
     })
 
-    function AfficherPokemonParElement(choix) {
-        let elementActif = datasFetch.find( elementPokemon => elementPokemon.apiTypes == choix);
-        document.getElementById("modal").style.display = 'flex';
-        // let imagePokemon2 = document.getElementById("imagepokemon");
-        // imagePokemon2.style.display = 'none'
-        let nomPokemon = document.getElementById("nompokemon");
-        nomPokemon.textContent = "Voici les pokemons de ce type : " + elementActif
-    }
+function AfficherPokemonParElement(choix) {
+    
+     getDataFetchPokemonParType(choix)
+   
+   
+    // let imagePokemon2 = document.getElementById("imagepokemon");
+    // imagePokemon2.style.display = 'none'
+        
+    // let nomPokemon = document.getElementById("nompokemon");
+    // nomPokemon.textContent = "Voici les pokemons de ce type : " + datasFetchPokemonParType
+}
 
 

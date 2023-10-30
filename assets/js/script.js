@@ -29,10 +29,8 @@ async function getDataFetchPokemonParType (type) {
         .then(element =>{
             element = element.slice(0,3);
             document.getElementById("modal").style.display = 'flex';
-            let imagePokemon2 = document.getElementById("imagepokemon");
-            imagePokemon2.style.display = 'none'
             let nomPokemon = document.getElementById("nompokemon");
-            nomPokemon.innerHTML = element[0].name + "\n" + element[1].name + "\n" + element[2].name
+            nomPokemon.innerHTML = "Voici trois pokemons de type " + document.querySelector("select").value + "<br><br> 1." + element[0].name + "<br> 2." + element[1].name + "<br> 3." + element[2].name
         });
 }
 
@@ -40,7 +38,18 @@ async function getDataFetchPokemonParType (type) {
 
 //Affichage liste 
 
+if (radioName.checked){
+    nomClique ()
+} else {
+    let divImage = document.getElementById(image)
+    imagePokemon2.remove()
+}
+
 radioName.addEventListener("click", function(){
+nomClique ()
+})
+
+function nomClique () {
 document.querySelector("select").options.length = 0
 datasFetch.forEach(unPokemon => {
     let option = document.createElement('option')
@@ -72,7 +81,7 @@ function AfficherPokemonParNom(choix) {
     let divTypesPokemon = document.getElementById("typespokemon")
     divTypesPokemon.innerText = typesPokemon
 }
-})
+}
 
 // ELEMENTS
 
@@ -98,13 +107,6 @@ radioElement.addEventListener("click", function(){
 function AfficherPokemonParElement(choix) {
     
      getDataFetchPokemonParType(choix)
-   
-   
-    // let imagePokemon2 = document.getElementById("imagepokemon");
-    // imagePokemon2.style.display = 'none'
-        
-    // let nomPokemon = document.getElementById("nompokemon");
-    // nomPokemon.textContent = "Voici les pokemons de ce type : " + datasFetchPokemonParType
 }
 
 

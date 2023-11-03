@@ -30,8 +30,7 @@ async function getDataFetchElements () {
 }
 
 let urlApiPPE = URL_API + "pokemon/type/";
-let type = "Normal"
-// console.log(await getDataFetchPPE(type))
+let type = ""
 async function getDataFetchPPE (type) {
     let resPPE = await fetch(urlApiPPE + type);
     let listePPE = await resPPE.json();

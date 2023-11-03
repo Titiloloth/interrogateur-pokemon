@@ -83,7 +83,7 @@ button:hover {
     justify-content: center;
     flex-wrap: wrap;
 }
-.modal-inner {
+.modal-inner-name {
 background-color: #ffcc03;
 border: 5px solid rgb(86, 86, 247);
 box-shadow: 2px 1px 1px lightgrey;

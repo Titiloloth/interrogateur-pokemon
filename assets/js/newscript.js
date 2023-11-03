@@ -1,14 +1,15 @@
 // INITIALISATION
 
-let boutons = document.querySelector("input")
-boutons.checked = false 
+let modalNom = document.getElementById("modal")
+modalNom.style.display = "none"
+
+let bouton = document.querySelector("button")
 
 let boutonNom = document.getElementById("radioName")
+boutonNom.checked = true
 let boutonElement = document.getElementById("radioElement")
 
 let liste = document.querySelector("select");
-let option = document.createElement("option");
-let choix = liste.value
 
 const URL_API = "https://pokebuildapi.fr/api/v1/"
 
@@ -28,16 +29,117 @@ async function getDataFetchElements () {
     listeElements = await resElements.json();
 }
 
-// let listePPE; //PPE = Pokemon Par Element
-// let urlApiPPE = URL_API + "pokemon/type/";
-// await getDataFetchPPE(type);
-// async function getDataFetchPPE () {
-//     let resPPE = await fetch(urlApiPPE + type);
-//     // resPPE.json();
-// }
+let listePPE; //PPE = Pokemon Par Element
+let urlApiPPE = URL_API + "pokemon/type/";
+let type = ""
+await getDataFetchPPE(type);
+async function getDataFetchPPE (type) {
+    let resPPE = await fetch(urlApiPPE + type);
+    listePPE = await resPPE.json();
+    return Promise.resolve("done")
+}
 
 //ALGORITHME
 
-if (boutonElement.checked){
-console.log(boutons.value)
-} 
+//Génération listes
+
+afficherListeNoms()
+
+boutonNom.addEventListener("change", function(){
+    afficherListeNoms()
+})
+
+boutonElement.addEventListener("change", function(){
+    afficherListeElements()
+})
+
+//Appui boutons
+
+bouton.addEventListener("click", function (){
+    afficherModal()
+        
+})
+
+//FONCTIONS 
+
+function init(){
+        window.location.reload()
+}
+
+function afficherListeNoms() {
+    if (boutonNom.checked){
+        liste.options.length = 0
+        listePokemons.forEach(unPokemon => {
+            let option = document.createElement('option')
+            option.textContent = unPokemon.name;
+            option.value = unPokemon.name;
+           liste.appendChild(option);
+        })
+    } 
+}
+
+function afficherListeElements() {
+    if (boutonElement.checked){
+        liste.options.length = 0
+        listeElements.forEach(unType => {
+            let option = document.createElement('option')
+            option.textContent = unType.name;
+            option.value = unType.name;
+           liste.appendChild(option);
+        })
+    } 
+}
+
+function afficherModal() {
+    if (boutonNom.checked){
+        let choix = liste.value
+        let pokemonActif = listePokemons.find( pokemon => pokemon.name == choix);
+
+        //Pop-up
+        let modalNom = document.getElementById("modal")
+        modalNom.style.display = "flex"
+        document.getElementById("retour").addEventListener("click", function(){
+            init()
+        })
+
+        //Nom du pokemon
+        document.getElementById("div1").textContent = "Voici les informations de " + choix
+
+        //Image du pokemon
+        let imagePokemon = document.createElement("img")
+        imagePokemon.setAttribute("id", "imagepokemon")
+        imagePokemon.src = pokemonActif.image
+        document.getElementById("div2").appendChild(imagePokemon)
+
+        //Element du pokemon
+        let elementPokemon = ""
+        pokemonActif.apiTypes.forEach(type => {
+            elementPokemon += `${type.name}/`; 
+                
+            });
+        elementPokemon = elementPokemon.substring(elementPokemon.length-1,0);
+        document.getElementById("div3").textContent = elementPokemon
+
+        //Stats du pokemon
+        document.getElementById("div4").textContent = "HP: " + pokemonActif.stats.HP + " | Attaque: " + pokemonActif.stats.attack + " | Defense: " + pokemonActif.stats.defense
+
+        //Evolution du pokemon
+        console.log(pokemonActif)
+        let evolutionPokemon = ""
+        pokemonActif.apiEvolutions.forEach(evolution => {
+            evolutionPokemon += `${evolution.name}/`; 
+        })
+        evolutionPokemon = evolutionPokemon.substring(evolutionPokemon.length-1,0);
+        document.getElementById("div5").textContent = "Evolution: " + evolutionPokemon
+        if (evolutionPokemon == ""){
+            document.getElementById("div5").style.visibility = "hidden"
+        }
+    } else if (boutonElement.checked){
+        let choix = liste.value
+        let type = choix
+        
+        console.log(listePPE)
+
+
+    }
+}

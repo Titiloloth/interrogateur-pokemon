@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./assets/css/style.css"></link>
-    <script type="module" src="./assets/js/script.js" async></script>
+    <script type="module" src="./assets/js/newscript.js" async></script>
     
     <title>Interroger ressource externe</title>
 </head>
@@ -17,19 +17,18 @@
             <img id="titre" src="/assets/img/titre.png" alt="">
             <fieldset>
                 <legend>Rechercher Pokemon</legend>
-                <div><input type="radio" name="radio" value="1" id="radioName" checked>
+                <div><input type="radio" name="radio" value="radioName" id="radioName">
                 <label for="name">Par nom</label>
-                <input type="radio" name="radio" value="2" id="radioElement">
+                <input type="radio" name="radio" value="radioElement" id="radioElement">
                 <label for="element">Par element</label></div>
             <select id="selection">
-                <option value="-1" id="-1">--Selection--</option>
             </select>
         </fieldset>
         </div>
         <button id="rechercher"><img id="chercher" src="/assets/img/chercher.png" alt=""></button>
     </div>
 <!-- pop-up -->
-    <div class="modal" id="modal">
+    <!-- <div class="modal" id="modal">
         <div class="modal-inner">
             <div id="nompokemon"></div>
             <div id="image"><img src="" alt="" id="imagepokemon"></div>
@@ -37,7 +36,7 @@
             <div id="evolutionpokemon"></div>
             <button id="retour" onClick="window.location.reload()"><img id="retour-img" src="/assets/img/retour.png" alt=""></button>
         </div>
-    </div>
+    </div> -->
     </div>
 </body>
 </html>

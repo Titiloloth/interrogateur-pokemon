@@ -29,17 +29,16 @@ async function getDataFetchElements () {
     listeElements = await resElements.json();
 }
 
-let listePPE; //PPE = Pokemon Par Element
 let urlApiPPE = URL_API + "pokemon/type/";
-let type = ""
-await getDataFetchPPE(type);
+let type = "Normal"
+// console.log(await getDataFetchPPE(type))
 async function getDataFetchPPE (type) {
     let resPPE = await fetch(urlApiPPE + type);
-    listePPE = await resPPE.json();
-    return Promise.resolve("done")
+    let listePPE = await resPPE.json();
+    return listePPE.slice(0,3);
 }
 
-//ALGORITHME
+//--ALGORITHME
 
 //Génération listes
 
@@ -60,7 +59,7 @@ bouton.addEventListener("click", function (){
         
 })
 
-//FONCTIONS 
+//--FONCTIONS 
 
 function init(){
         window.location.reload()
@@ -68,7 +67,7 @@ function init(){
 
 function afficherListeNoms() {
     if (boutonNom.checked){
-        liste.options.length = 0
+        liste.options.length = 1
         listePokemons.forEach(unPokemon => {
             let option = document.createElement('option')
             option.textContent = unPokemon.name;
@@ -80,7 +79,7 @@ function afficherListeNoms() {
 
 function afficherListeElements() {
     if (boutonElement.checked){
-        liste.options.length = 0
+        liste.options.length = 1
         listeElements.forEach(unType => {
             let option = document.createElement('option')
             option.textContent = unType.name;
@@ -90,7 +89,7 @@ function afficherListeElements() {
     } 
 }
 
-function afficherModal() {
+async function afficherModal() {
     if (boutonNom.checked){
         let choix = liste.value
         let pokemonActif = listePokemons.find( pokemon => pokemon.name == choix);
@@ -134,12 +133,25 @@ function afficherModal() {
         if (evolutionPokemon == ""){
             document.getElementById("div5").style.visibility = "hidden"
         }
+
     } else if (boutonElement.checked){
+
         let choix = liste.value
         let type = choix
+        let result = await getDataFetchPPE(type)
         
-        console.log(listePPE)
+        //Pop-up
+        let modalNom = document.getElementById("modal")
+        modalNom.style.display = "flex"
+        document.getElementById("retour").addEventListener("click", function(){
+            init()
+        })
 
+        //Phrase
+        document.getElementById("div1").innerHTML = "Voici 3 pokemons de type " + choix + "<br><br>"
+        
+        //Liste des trois pokemons
+        document.getElementById("div2").innerHTML = "1. " + result[0].name + "<br> 2. " + result[1].name + "<br> 3. " + result[2].name
 
     }
 }
